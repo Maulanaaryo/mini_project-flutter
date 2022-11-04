@@ -6,13 +6,13 @@ import 'package:mini_project_alterra/domain/usescases/get_popular.dart';
 class MoviePopularProvider extends ChangeNotifier {
   final GetPopularMovies getPopularMovies;
 
-  MoviePopularProvider(this.getPopularMovies);
-
-  RequestState _state = RequestState.Empty;
-  RequestState get state => _state;
+  MoviePopularProvider({required this.getPopularMovies});
 
   List<Movie> _movie = [];
   List<Movie> get movie => _movie;
+
+  RequestState _state = RequestState.Empty;
+  RequestState get state => _state;
 
   String _message = '';
   String get message => _message;
@@ -25,13 +25,13 @@ class MoviePopularProvider extends ChangeNotifier {
 
     result.fold(
       (failure) {
-        _message = failure.message;
         _state = RequestState.Error;
+        _message = failure.message;
         notifyListeners();
       },
-      (moviesData) {
-        _movie = moviesData;
+      (data) {
         _state = RequestState.Loaded;
+        _movie = data;
         notifyListeners();
       },
     );

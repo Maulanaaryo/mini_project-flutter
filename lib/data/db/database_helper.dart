@@ -1,20 +1,18 @@
-import 'package:mini_project_alterra/data/models/movie/movie_table.dart';
+import 'package:mini_project_alterra/data/models/movie_table.dart';
 import 'package:sqflite/sqflite.dart';
 
-class DatabaseHelperMovie {
-  static DatabaseHelperMovie? databaseHelperMovie;
-  DatabaseHelperMovie.instance() {
-    databaseHelperMovie = this;
+class DatabaseHelper {
+  static DatabaseHelper? _databaseHelper;
+  DatabaseHelper._instance() {
+    _databaseHelper = this;
   }
 
-  factory DatabaseHelperMovie() =>
-      databaseHelperMovie ?? DatabaseHelperMovie.instance();
+  factory DatabaseHelper() => _databaseHelper ?? DatabaseHelper._instance();
+
   static Database? _database;
 
   Future<Database?> get database async {
-    if (_database == null) {
-      _database = await _initDb();
-    }
+    _database ??= await _initDb();
     return _database;
   }
 
@@ -22,7 +20,7 @@ class DatabaseHelperMovie {
 
   Future<Database> _initDb() async {
     final path = await getDatabasesPath();
-    final databasePath = '$path/nontonmovie.db';
+    final databasePath = '$path/ditonton.db';
 
     var db = await openDatabase(databasePath, version: 1, onCreate: _onCreate);
     return db;
@@ -30,12 +28,13 @@ class DatabaseHelperMovie {
 
   void _onCreate(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE $_tblWatchlist {
-      id INTEGER PRIMARY KEY,
-      title TEXT,
-      overview TEXT, 
-      posterPath TEXT
-      );''');
+      CREATE TABLE  $_tblWatchlist (
+        id INTEGER PRIMARY KEY,
+        title TEXT,
+        overview TEXT,
+        posterPath TEXT
+      );
+    ''');
   }
 
   Future<int> insertWatchlist(MovieTable movie) async {
@@ -70,6 +69,7 @@ class DatabaseHelperMovie {
   Future<List<Map<String, dynamic>>> getWatchlistMovies() async {
     final db = await database;
     final List<Map<String, dynamic>> results = await db!.query(_tblWatchlist);
+
     return results;
   }
 }

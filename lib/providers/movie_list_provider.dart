@@ -6,27 +6,6 @@ import 'package:mini_project_alterra/domain/usescases/get_popular.dart';
 import 'package:mini_project_alterra/domain/usescases/get_top_rated.dart';
 
 class MovieListProvider extends ChangeNotifier {
-  var _nowPlayingMovies = <Movie>[];
-  List<Movie> get nowPlayingMovies => _nowPlayingMovies;
-
-  RequestState _nowPlayingState = RequestState.Empty;
-  RequestState get nowPlayingState => _nowPlayingState;
-
-  var _popularMovies = <Movie>[];
-  List<Movie> get popularMovies => _popularMovies;
-
-  RequestState _popularState = RequestState.Empty;
-  RequestState get popularState => _popularState;
-
-  var _topRatedMovies = <Movie>[];
-  List<Movie> get topRatedMovies => _topRatedMovies;
-
-  RequestState _topRatedState = RequestState.Empty;
-  RequestState get topRatedState => _topRatedState;
-
-  String _message = '';
-  String get message => _message;
-
   final GetNowPlayingMovies getNowPlayingMovies;
   final GetPopularMovies getPopularMovies;
   final GetTopRatedMovies getTopRatedMovies;
@@ -36,6 +15,27 @@ class MovieListProvider extends ChangeNotifier {
     required this.getPopularMovies,
     required this.getTopRatedMovies,
   });
+
+  var _nowPlayingMovies = <Movie>[];
+  List<Movie> get nowPlayingMovies => _nowPlayingMovies;
+
+  var _popularMovies = <Movie>[];
+  List<Movie> get popularMovies => _popularMovies;
+
+  var _topRatedMovies = <Movie>[];
+  List<Movie> get topRatedMovies => _topRatedMovies;
+
+  RequestState _nowPlayingState = RequestState.Empty;
+  RequestState get nowPlayingState => _nowPlayingState;
+
+  RequestState _popularState = RequestState.Empty;
+  RequestState get popularState => _popularState;
+
+  RequestState _topRatedState = RequestState.Empty;
+  RequestState get topRatedState => _topRatedState;
+
+  String _message = '';
+  String get message => _message;
 
   Future<void> fetchNowPlayingMovies() async {
     _nowPlayingState = RequestState.Loading;

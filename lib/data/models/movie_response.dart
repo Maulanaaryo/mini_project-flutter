@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:mini_project_alterra/data/models/movie/movie_model.dart';
+import 'package:mini_project_alterra/data/models/movie_model.dart';
 
 class MovieResponse extends Equatable {
   final List<MovieModel> movieList;

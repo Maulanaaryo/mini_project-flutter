@@ -1,6 +1,6 @@
 import 'package:mini_project_alterra/common/exception.dart';
 import 'package:mini_project_alterra/data/db/database_helper.dart';
-import 'package:mini_project_alterra/data/models/movie/movie_table.dart';
+import 'package:mini_project_alterra/data/models/movie_table.dart';
 
 abstract class MovieLocalDataSource {
   Future<String> insertWatchlist(MovieTable movie);
@@ -10,7 +10,7 @@ abstract class MovieLocalDataSource {
 }
 
 class MovieLocalDataSourceImpl implements MovieLocalDataSource {
-  final DatabaseHelperMovie databaseHelper;
+  final DatabaseHelper databaseHelper;
 
   MovieLocalDataSourceImpl({required this.databaseHelper});
 
@@ -18,7 +18,17 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   Future<String> insertWatchlist(MovieTable movie) async {
     try {
       await databaseHelper.insertWatchlist(movie);
-      return 'Add to Watchlist';
+      return 'Added to Watchlist';
+    } catch (e) {
+      throw DatabaseException(e.toString());
+    }
+  }
+
+  @override
+  Future<String> removeWatchlist(MovieTable movie) async {
+    try {
+      await databaseHelper.removeWatchlist(movie);
+      return 'Removed from Watchlist';
     } catch (e) {
       throw DatabaseException(e.toString());
     }
@@ -38,15 +48,5 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   Future<List<MovieTable>> getWatchlistMovies() async {
     final result = await databaseHelper.getWatchlistMovies();
     return result.map((data) => MovieTable.fromMap(data)).toList();
-  }
-
-  @override
-  Future<String> removeWatchlist(MovieTable movie) async {
-    try {
-      await databaseHelper.removeWatchlist(movie);
-      return 'Remove from Watchlist';
-    } catch (e) {
-      throw DatabaseException(e.toString());
-    }
   }
 }

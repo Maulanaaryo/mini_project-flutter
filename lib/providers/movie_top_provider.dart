@@ -6,13 +6,13 @@ import 'package:mini_project_alterra/domain/usescases/get_top_rated.dart';
 class MovieTopRatedProvider extends ChangeNotifier {
   final GetTopRatedMovies getTopRatedMovies;
 
-  MovieTopRatedProvider(this.getTopRatedMovies);
-
-  RequestState _state = RequestState.Empty;
-  RequestState get state => _state;
+  MovieTopRatedProvider({required this.getTopRatedMovies});
 
   List<Movie> _movie = [];
   List<Movie> get movie => _movie;
+
+  RequestState _state = RequestState.Empty;
+  RequestState get state => _state;
 
   String _message = '';
   String get message => _message;
@@ -25,13 +25,13 @@ class MovieTopRatedProvider extends ChangeNotifier {
 
     result.fold(
       (failure) {
-        _message = failure.message;
         _state = RequestState.Error;
+        _message = failure.message;
         notifyListeners();
       },
       (data) {
-        _movie = data;
         _state = RequestState.Loaded;
+        _movie = data;
         notifyListeners();
       },
     );

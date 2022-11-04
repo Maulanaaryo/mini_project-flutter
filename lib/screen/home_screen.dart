@@ -7,7 +7,11 @@ import 'package:mini_project_alterra/common/constants.dart';
 import 'package:mini_project_alterra/common/state_enum.dart';
 import 'package:mini_project_alterra/domain/entities/movie.dart';
 import 'package:mini_project_alterra/providers/movie_list_provider.dart';
-import 'package:mini_project_alterra/widgets/custom_dialog.dart';
+import 'package:mini_project_alterra/screen/detail_screen.dart';
+import 'package:mini_project_alterra/screen/popular_screen.dart';
+import 'package:mini_project_alterra/screen/search_screen.dart';
+import 'package:mini_project_alterra/widgets/movie_card_list.dart';
+import 'package:mini_project_alterra/widgets/drawer_list.dart';
 import 'package:provider/provider.dart';
 
 class HomeMovieScreen extends StatefulWidget {
@@ -33,59 +37,55 @@ class _HomeMovieScreenState extends State<HomeMovieScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: Column(
-          children: [
-            const UserAccountsDrawerHeader(
-              currentAccountPicture: CircleAvatar(
-                backgroundImage: AssetImage(''),
-              ),
-              accountName: Text('Maulana Aryo'),
-              accountEmail: Text('aryo@gmail.com'),
-            ),
-            ListTile(
-              leading: const Icon(Icons.timer),
-              title: const Text('Scheduling Movie'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: const Icon(Icons.color_lens_outlined),
-              title: const Text('Dark Theme'),
-              onTap: () {
-                customDialog(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.save_alt_sharp),
-              title: const Text('Watchlist'),
-              onTap: () {},
-            ),
-            ListTile(
-              onTap: () {},
-              leading: const Icon(Icons.info_outline),
-              title: const Text('About'),
-            ),
-          ],
-        ),
-      ),
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          'Movie',
-          style: TextStyle(color: Colors.grey),
+        title: Text(
+          'MOVIES',
+          style: kHeading2,
         ),
-        backgroundColor: Colors.black,
+        leading: Builder(
+          builder: (context) {
+            return IconButton(
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              icon: const Icon(Icons.menu),
+              color: whiteColor70,
+            );
+          },
+        ),
+        backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                    return const SearchMovieScreen();
+                  },
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    final tween = Tween(
+                      begin: const Offset(0, 1),
+                      end: Offset.zero,
+                    );
+                    return SlideTransition(
+                      position: animation.drive(tween),
+                      child: child,
+                    );
+                  },
+                ),
+              );
+            },
             icon: const Icon(
               Icons.search,
-              color: Colors.grey,
+              color: whiteColor70,
             ),
-          )
+          ),
         ],
       ),
+      drawer: const DrawerCard(),
       body: _buildBody(context),
     );
   }
@@ -98,7 +98,7 @@ class _HomeMovieScreenState extends State<HomeMovieScreen> {
           constraints: BoxConstraints(minHeight: constraints.maxHeight),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
+            children: [
               Consumer<MovieListProvider>(
                 builder: (context, data, child) {
                   final state = data.nowPlayingState;
@@ -116,6 +116,11 @@ class _HomeMovieScreenState extends State<HomeMovieScreen> {
                             Movie movie = result[index];
                             return GestureDetector(
                               onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  DetailMovieScreen.routeName,
+                                  arguments: movie.id,
+                                );
                               },
                               child: Stack(
                                 alignment: Alignment.bottomLeft,
@@ -182,28 +187,60 @@ class _HomeMovieScreenState extends State<HomeMovieScreen> {
                   }
                 },
               ),
-              _buildSubHeading(title: 'Popular Movies', onTap: () => {}
-                  // Navigator.pushNamed(context, PopularMoviesPage.routeName),
-                  ),
-              Consumer<MovieListProvider>(builder: (context, data, child) {
-                final state = data.popularState;
-                if (state == RequestState.Loading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.Loaded) {
-                  return MovieList(data.popularMovies);
-                } else if (state == RequestState.Error) {
-                  return Center(
-                    child: Text(
-                      data.message,
-                      key: const Key('error'),
-                    ),
-                  );
-                } else {
-                  return const Text('There is an error');
-                }
-              }),
+              _buildSubHeading(
+                  title: 'Popular Movies',
+                  onTap: () => {
+                        Navigator.pushNamed(
+                            context, PopularMovieScreen.routeName),
+                      }),
+              Consumer<MovieListProvider>(
+                builder: (context, data, child) {
+                  final state = data.popularState;
+                  if (state == RequestState.Loading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state == RequestState.Loaded) {
+                    return MovieList(data.popularMovies);
+                  } else if (state == RequestState.Error) {
+                    return Center(
+                      child: Text(
+                        data.message,
+                        key: const Key('error'),
+                      ),
+                    );
+                  } else {
+                    return const Text('There is an error');
+                  }
+                },
+              ),
+              _buildSubHeading(
+                  title: 'Top Rated',
+                  onTap: () => {
+                        Navigator.pushNamed(
+                            context, PopularMovieScreen.routeName),
+                      }),
+              Consumer<MovieListProvider>(
+                builder: (context, data, child) {
+                  final state = data.topRatedState;
+                  if (state == RequestState.Loading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state == RequestState.Loaded) {
+                    return MovieList(data.topRatedMovies);
+                  } else if (state == RequestState.Error) {
+                    return Center(
+                      child: Text(
+                        data.message,
+                        key: const Key('error'),
+                      ),
+                    );
+                  } else {
+                    return const Text('There is an error');
+                  }
+                },
+              ),
             ],
           ),
         ),
@@ -219,7 +256,7 @@ class _HomeMovieScreenState extends State<HomeMovieScreen> {
           padding: const EdgeInsets.only(left: 8),
           child: Text(
             title,
-            style: kHeading6,
+            style: kHeading1,
           ),
         ),
         InkWell(
@@ -227,48 +264,14 @@ class _HomeMovieScreenState extends State<HomeMovieScreen> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              children: const [Text('See More'), Icon(Icons.arrow_forward_ios)],
+              children: const [
+                Text('See More'),
+                Icon(Icons.arrow_right),
+              ],
             ),
           ),
         ),
       ],
-    );
-  }
-}
-
-class MovieList extends StatelessWidget {
-  final List<Movie> movies;
-
-  const MovieList(this.movies, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 200,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          final movie = movies[index];
-          return Container(
-            padding: const EdgeInsets.all(8),
-            child: InkWell(
-              onTap: () {
-              },
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(16)),
-                child: CachedNetworkImage(
-                  imageUrl: '$baseImageUrl${movie.posterPath}',
-                  placeholder: (context, url) => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                ),
-              ),
-            ),
-          );
-        },
-        itemCount: movies.length,
-      ),
     );
   }
 }

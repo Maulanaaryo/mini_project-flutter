@@ -5,6 +5,7 @@ import 'package:mini_project_alterra/common/exception.dart';
 import 'package:mini_project_alterra/common/failure.dart';
 import 'package:mini_project_alterra/data/datasources/movie_local_data_source.dart';
 import 'package:mini_project_alterra/data/datasources/movie_remote_data_source.dart';
+import 'package:mini_project_alterra/data/models/movie_table.dart';
 import 'package:mini_project_alterra/domain/entities/movie.dart';
 import 'package:mini_project_alterra/domain/entities/movie_detail.dart';
 import 'package:mini_project_alterra/domain/repositories/movie_repository.dart';
@@ -30,7 +31,6 @@ class MovieRepositoryImpl implements MovieRepository {
     }
   }
 
-
   @override
   Future<Either<Failure, List<Movie>>> getPopularMovies() async {
     try {
@@ -54,22 +54,76 @@ class MovieRepositoryImpl implements MovieRepository {
       return const Left(ConnectionFailure('Failed to connect to the network'));
     }
   }
-  
+
   @override
-  Future<bool> isAddedToWatchlist(int id) {
-    // TODO: implement isAddedToWatchlist
-    throw UnimplementedError();
+  Future<Either<Failure, MovieDetail>> getDetailMovies(int id) async {
+    try {
+      final result = await remoteDataSource.getDetailMovies(id);
+      return Right(result.toEntity());
+    } on ServerException {
+      return const Left(ServerFailure(''));
+    } on SocketException {
+      return const Left(ConnectionFailure('Failed to connect to the network'));
+    }
   }
-  
+
   @override
-  Future<Either<Failure, String>> removeWatchlist(MovieDetail movie) {
-    // TODO: implement removeWatchlist
-    throw UnimplementedError();
+  Future<Either<Failure, List<Movie>>> getRecommendationsMovies(int id) async {
+    try {
+      final result = await remoteDataSource.getRecommendationsMovies(id);
+      return Right(result.map((model) => model.toEntity()).toList());
+    } on ServerException {
+      return const Left(ServerFailure(''));
+    } on SocketException {
+      return const Left(ConnectionFailure('Failed to connect to the network'));
+    }
   }
-  
+
   @override
-  Future<Either<Failure, String>> saveWatchlist(MovieDetail movie) {
-    // TODO: implement saveWatchlist
-    throw UnimplementedError();
+  Future<Either<Failure, List<Movie>>> searchMovies(String query) async {
+    try {
+      final result = await remoteDataSource.searchMovies(query);
+      return Right(result.map((model) => model.toEntity()).toList());
+    } on ServerException {
+      return const Left(ServerFailure(''));
+    } on SocketException {
+      return const Left(ConnectionFailure('Failed to connect to the network'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> saveWatchlist(MovieDetail movie) async {
+    try {
+      final result =
+          await localDataSource.insertWatchlist(MovieTable.fromEntity(movie));
+      return Right(result);
+    } on DatabaseException catch (e) {
+      return Left(DatabaseFailure(e.message));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> removeWatchlist(MovieDetail movie) async {
+    try {
+      final result =
+          await localDataSource.removeWatchlist(MovieTable.fromEntity(movie));
+      return Right(result);
+    } on DatabaseException catch (e) {
+      return Left(DatabaseFailure(e.message));
+    }
+  }
+
+  @override
+  Future<bool> isAddedToWatchlist(int id) async {
+    final result = await localDataSource.getMovieById(id);
+    return result != null;
+  }
+
+  @override
+  Future<Either<Failure, List<Movie>>> getWatchlistMovies() async {
+    final result = await localDataSource.getWatchlistMovies();
+    return Right(result.map((model) => model.toEntity()).toList());
   }
 }
