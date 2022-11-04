@@ -1,19 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mini_project_alterra/auth/register_auth.dart';
 import 'package:mini_project_alterra/common/constants.dart';
-import 'package:mini_project_alterra/screen/home_screen.dart';
 
-class LoginAuth extends StatefulWidget {
-  static const routeName = '/loginAuth';
-  const LoginAuth({super.key});
+class RegisterAuth extends StatefulWidget {
+  static const routeName = '/registerAuth';
+  const RegisterAuth({super.key});
 
   @override
-  State<LoginAuth> createState() => _LoginAuthState();
+  State<RegisterAuth> createState() => _RegisterAuthState();
 }
 
-class _LoginAuthState extends State<LoginAuth> {
+class _RegisterAuthState extends State<RegisterAuth> {
   final _auth = FirebaseAuth.instance;
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -22,6 +21,7 @@ class _LoginAuthState extends State<LoginAuth> {
 
   @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -53,33 +53,72 @@ class _LoginAuthState extends State<LoginAuth> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Masuk sekarang untuk melanjutkan',
+                      'Daftar sekarang untuk melanjutkan',
                       style: kSubtitle.copyWith(color: kTaskTile),
+                    ),
+                    const SizedBox(
+                      height: 8.0,
                     ),
                     const Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Image(
                         image: AssetImage('assets/movie.png'),
-                        height: 350,
+                        height: 300,
                       ),
                     ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    TextFormField(
+                      controller: _nameController,
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                        labelText: 'Masukan username anda',
+                        prefixIcon: const Icon(Icons.account_circle_outlined),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                      validator: (value) {
+                        RegExp regex = RegExp(r'^.{3,}$');
+                        if (value!.isEmpty) {
+                          return ("First Name cannot be Empty");
+                        }
+                        if (!regex.hasMatch(value)) {
+                          return ("Enter Valid name(Min. 3 Character)");
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _nameController.text = value!;
+                      },
+                    ),
+                    const SizedBox(height: 8.0),
                     TextFormField(
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.email_outlined),
                         labelText: 'Masukan email anda',
+                        prefixIcon: const Icon(Icons.email_outlined),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16),
                         ),
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Masukan email!';
-                        } else {
-                          return null;
+                          return ("Please Enter Your Email");
                         }
+                        // reg expression for email validation
+                        if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                            .hasMatch(value)) {
+                          return ("Please Enter a valid email");
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _emailController.text = value!;
                       },
                     ),
                     const SizedBox(height: 8.0),
@@ -105,11 +144,18 @@ class _LoginAuthState extends State<LoginAuth> {
                         ),
                       ),
                       validator: (value) {
+                        // ignore: unnecessary_new
+                        RegExp regex = new RegExp(r'^.{6,}$');
                         if (value!.isEmpty) {
-                          return 'Masukan Email Anda!';
-                        } else {
-                          return null;
+                          return ("Password is required for login");
                         }
+                        if (!regex.hasMatch(value)) {
+                          return ("Enter Valid Password(Min. 6 Character)");
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _passwordController.text = value!;
                       },
                     ),
                     const SizedBox(height: 24.0),
@@ -125,14 +171,21 @@ class _LoginAuthState extends State<LoginAuth> {
                           _isLoading = true;
                         });
                         try {
+                          final name = _nameController.text;
                           final email = _emailController.text;
                           final password = _passwordController.text;
-
                           await _auth
-                              .signInWithEmailAndPassword(
+                              .createUserWithEmailAndPassword(
                                   email: email, password: password)
-                              .then((value) => Navigator.pushReplacementNamed(
-                                  context, HomeMovieScreen.routeName));
+                              .then((result) {
+                            result.user?.updateDisplayName(name);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Akun Berhasil Dibuat!'),
+                              ),
+                            );
+                            Navigator.pop(context);
+                          });
                         } catch (e) {
                           final snackbar =
                               SnackBar(content: Text(e.toString()));
@@ -143,12 +196,11 @@ class _LoginAuthState extends State<LoginAuth> {
                           });
                         }
                       },
-                      child: const Text('Masuk'),
+                      child: const Text('Daftar'),
                     ),
                     TextButton(
-                      child: const Text('Tidak punya akun? Daftar'),
-                      onPressed: () =>
-                          Navigator.pushNamed(context, RegisterAuth.routeName),
+                      child: const Text('Sudah punya akun? Masuk'),
+                      onPressed: () => Navigator.pop(context),
                     ),
                   ],
                 ),
@@ -158,8 +210,11 @@ class _LoginAuthState extends State<LoginAuth> {
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height,
                       color: Colors.grey.withOpacity(0.5),
-                      child: const Center(child: CircularProgressIndicator()))
-                  : Container(),
+                      child: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : Container()
             ],
           ),
         ),

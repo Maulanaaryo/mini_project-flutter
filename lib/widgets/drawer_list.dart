@@ -1,22 +1,52 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mini_project_alterra/screen/watchlist_screen.dart';
 import 'package:mini_project_alterra/widgets/custom_dialog.dart';
 
-class DrawerCard extends StatelessWidget {
+class DrawerCard extends StatefulWidget {
   const DrawerCard({super.key});
+
+  @override
+  State<DrawerCard> createState() => _DrawerCardState();
+}
+
+class _DrawerCardState extends State<DrawerCard> {
+  final _auth = FirebaseAuth.instance;
+  late User _activeUser;
+
+  @override
+  void initState() {
+    _getCurrentUser();
+    super.initState();
+  }
+
+  void _getCurrentUser() {
+    try {
+      var currentUser = _auth.currentUser;
+
+      if (currentUser != null) {
+        _activeUser = currentUser;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Column(
         children: [
-          const UserAccountsDrawerHeader(
-            currentAccountPicture: CircleAvatar(
+          UserAccountsDrawerHeader(
+            currentAccountPicture: const CircleAvatar(
               backgroundImage: NetworkImage(
-                  'https://images.unsplash.com/photo-1665724627267-ceb4e03202c4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=327&q=80'),
+                  'https://cdn.pixabay.com/photo/2017/02/13/01/26/the-question-mark-2061539_1280.png'),
             ),
-            accountName: Text('Baby'),
-            accountEmail: Text('Baby@gmail.com'),
+            accountName: Text(_activeUser.displayName!),
+            accountEmail: Text(_activeUser.email!),
           ),
           ListTile(
             leading: const Icon(Icons.timer),

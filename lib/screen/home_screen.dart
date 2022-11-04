@@ -50,7 +50,7 @@ class _HomeMovieScreenState extends State<HomeMovieScreen> {
                 Scaffold.of(context).openDrawer();
               },
               icon: const Icon(Icons.menu),
-              color: whiteColor70,
+              color: kTertiaryTextColor,
             );
           },
         ),
@@ -80,7 +80,7 @@ class _HomeMovieScreenState extends State<HomeMovieScreen> {
             },
             icon: const Icon(
               Icons.search,
-              color: whiteColor70,
+              color: kTertiaryTextColor,
             ),
           ),
         ],
@@ -215,7 +215,7 @@ class _HomeMovieScreenState extends State<HomeMovieScreen> {
                 },
               ),
               _buildSubHeading(
-                  title: 'Top Rated',
+                  title: 'Top Rated Movies',
                   onTap: () => {
                         Navigator.pushNamed(
                             context, PopularMovieScreen.routeName),

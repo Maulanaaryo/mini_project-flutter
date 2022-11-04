@@ -1,5 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mini_project_alterra/auth/login_auth.dart';
+import 'package:mini_project_alterra/auth/register_auth.dart';
 import 'package:mini_project_alterra/common/utils.dart';
 import 'package:mini_project_alterra/injection.dart' as di;
 import 'package:mini_project_alterra/providers/movie_detail_provider.dart';
@@ -17,7 +19,9 @@ import 'package:mini_project_alterra/screen/top_rated_screen.dart';
 import 'package:mini_project_alterra/screen/watchlist_screen.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   di.init();
   runApp(const MyApp());
 }
@@ -60,26 +64,27 @@ class MyApp extends StatelessWidget {
                 builder: (_) => const HomeMovieScreen(),
               );
             case PopularMovieScreen.routeName:
-              return CupertinoPageRoute(
-                builder: (_) => const PopularMovieScreen(),
-              );
+              return MaterialPageRoute(
+                  builder: (_) => const PopularMovieScreen());
             case TopRatedMovieScreen.routeName:
-              return CupertinoPageRoute(
-                builder: (_) => const TopRatedMovieScreen(),
-              );
+              return MaterialPageRoute(
+                  builder: (_) => const TopRatedMovieScreen());
             case SearchMovieScreen.routeName:
-              return CupertinoPageRoute(
-                builder: (_) => const SearchMovieScreen(),
-              );
+              return MaterialPageRoute(
+                  builder: (_) => const SearchMovieScreen());
             case WatchlistMovieScreen.routeName:
-              return CupertinoPageRoute(
-                builder: (_) => const WatchlistMovieScreen(),
-              );
+              return MaterialPageRoute(
+                  builder: (_) => const WatchlistMovieScreen());
             case DetailMovieScreen.routeName:
               final id = settings.arguments as int;
               return MaterialPageRoute(
                   builder: (_) => DetailMovieScreen(id: id),
                   settings: settings);
+            case LoginAuth.routeName:
+              return MaterialPageRoute(builder: (_) => const LoginAuth());
+            case RegisterAuth.routeName:
+              return MaterialPageRoute(builder: (_) => const RegisterAuth());
+
             default:
               return MaterialPageRoute(builder: (_) {
                 return const Scaffold(

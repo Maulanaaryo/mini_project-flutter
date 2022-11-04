@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1012702834999",
+    "project_id": "mini-project-alterra-ad8d9",
+    "storage_bucket": "mini-project-alterra-ad8d9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012702834999:android:296a8ed5644a6c18a9aab2",
+        "android_client_info": {
+          "package_name": "com.example.mini_project_alterra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1012702834999-lpfbj1p45l6tunmgm878kac88jnf9gei.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCL0Bn3nqZoxvZBgBAybS2KOWVj77dHOhc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1012702834999-lpfbj1p45l6tunmgm878kac88jnf9gei.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
