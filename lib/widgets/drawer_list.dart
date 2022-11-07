@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mini_project_alterra/auth/login_auth.dart';
+import 'package:mini_project_alterra/screen/about_screen.dart';
+import 'package:mini_project_alterra/screen/review_screen.dart';
 import 'package:mini_project_alterra/screen/watchlist_screen.dart';
 import 'package:mini_project_alterra/widgets/custom_dialog.dart';
 
@@ -70,10 +73,26 @@ class _DrawerCardState extends State<DrawerCard> {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.library_books),
+            title: const Text('Review App'),
+            onTap: () {
+              Navigator.pushNamed(context, ReviewListScreen.routeName);
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.info_outline),
             title: const Text('About'),
             onTap: () {
-              customDialog(context);
+              Navigator.pushNamed(context, AboutScreen.routeName);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.logout),
+            title: const Text('Log Out'),
+            onTap: () async {
+              await _auth.signOut().then((value) =>
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, LoginAuth.routeName, (route) => false));
             },
           ),
         ],
