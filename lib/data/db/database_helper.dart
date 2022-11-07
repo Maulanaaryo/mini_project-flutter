@@ -20,7 +20,7 @@ class DatabaseHelper {
 
   Future<Database> _initDb() async {
     final path = await getDatabasesPath();
-    final databasePath = '$path/ditonton.db';
+    final databasePath = '$path/nonton.db';
 
     var db = await openDatabase(databasePath, version: 1, onCreate: _onCreate);
     return db;
@@ -32,16 +32,18 @@ class DatabaseHelper {
         id INTEGER PRIMARY KEY,
         title TEXT,
         overview TEXT,
-        posterPath TEXT
+        posterPath TEXT,
       );
     ''');
   }
 
+  // Menambahkan ke daftar Watchlist
   Future<int> insertWatchlist(MovieTable movie) async {
     final db = await database;
     return await db!.insert(_tblWatchlist, movie.toJson());
   }
 
+  // Menghapus daftar Watchlist
   Future<int> removeWatchlist(MovieTable movie) async {
     final db = await database;
     return await db!.delete(
@@ -51,6 +53,7 @@ class DatabaseHelper {
     );
   }
 
+  // Menambahkan ke daftar Watchlist menggunakan ID
   Future<Map<String, dynamic>?> getMovieById(int id) async {
     final db = await database;
     final results = await db!.query(
@@ -66,6 +69,7 @@ class DatabaseHelper {
     }
   }
 
+  // Menampilkan seluruh data di Watchlist
   Future<List<Map<String, dynamic>>> getWatchlistMovies() async {
     final db = await database;
     final List<Map<String, dynamic>> results = await db!.query(_tblWatchlist);

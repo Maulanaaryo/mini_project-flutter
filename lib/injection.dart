@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 
 import 'package:mini_project_alterra/data/datasources/movie_local_data_source.dart';
 import 'package:mini_project_alterra/data/datasources/movie_remote_data_source.dart';
+import 'package:mini_project_alterra/data/db/database_catatan.dart';
 import 'package:mini_project_alterra/data/db/database_helper.dart';
 import 'package:mini_project_alterra/data/repositories/movie_repositories.dart';
 import 'package:mini_project_alterra/domain/repositories/movie_repository.dart';
@@ -20,6 +21,7 @@ import 'package:mini_project_alterra/domain/usescases/search.dart';
 import 'package:mini_project_alterra/providers/movie_detail_provider.dart';
 import 'package:mini_project_alterra/providers/movie_list_provider.dart';
 import 'package:mini_project_alterra/providers/movie_popular_provider.dart';
+import 'package:mini_project_alterra/providers/movie_review.dart';
 import 'package:mini_project_alterra/providers/movie_search.dart';
 import 'package:mini_project_alterra/providers/movie_top_provider.dart';
 import 'package:mini_project_alterra/providers/movie_watchlist_provider.dart';
@@ -70,6 +72,10 @@ void init() {
     ),
   );
 
+  locator.registerFactory(
+    () => MovieReviewProvider(),
+  );
+
   // use case
   locator.registerLazySingleton(() => GetNowPlayingMovies(locator()));
   locator.registerLazySingleton(() => GetPopularMovies(locator()));
@@ -97,9 +103,9 @@ void init() {
       () => MovieLocalDataSourceImpl(databaseHelper: locator()));
 
   // database helper
-  locator
-      .registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());
-
+  locator.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());
+  locator.registerLazySingleton<DatabaseHelperReview>(
+      () => DatabaseHelperReview());
   // external
   locator.registerLazySingleton(() => http.Client());
 }

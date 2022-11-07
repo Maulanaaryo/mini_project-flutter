@@ -7,12 +7,15 @@ import 'package:mini_project_alterra/injection.dart' as di;
 import 'package:mini_project_alterra/providers/movie_detail_provider.dart';
 import 'package:mini_project_alterra/providers/movie_list_provider.dart';
 import 'package:mini_project_alterra/providers/movie_popular_provider.dart';
+import 'package:mini_project_alterra/providers/movie_review.dart';
 import 'package:mini_project_alterra/providers/movie_search.dart';
 import 'package:mini_project_alterra/providers/movie_top_provider.dart';
 import 'package:mini_project_alterra/providers/movie_watchlist_provider.dart';
+import 'package:mini_project_alterra/screen/about_screen.dart';
 import 'package:mini_project_alterra/screen/detail_screen.dart';
 import 'package:mini_project_alterra/screen/home_screen.dart';
 import 'package:mini_project_alterra/screen/popular_screen.dart';
+import 'package:mini_project_alterra/screen/review_screen.dart';
 import 'package:mini_project_alterra/screen/search_screen.dart';
 import 'package:mini_project_alterra/screen/splash_screen.dart';
 import 'package:mini_project_alterra/screen/top_rated_screen.dart';
@@ -51,6 +54,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => di.locator<MoviesearchProvider>(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<MovieReviewProvider>(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -84,7 +90,11 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => const LoginAuth());
             case RegisterAuth.routeName:
               return MaterialPageRoute(builder: (_) => const RegisterAuth());
-
+            case ReviewListScreen.routeName:
+              return MaterialPageRoute(
+                  builder: (_) => const ReviewListScreen());
+            case AboutScreen.routeName:
+              return MaterialPageRoute(builder: (_) => const AboutScreen());
             default:
               return MaterialPageRoute(builder: (_) {
                 return const Scaffold(
