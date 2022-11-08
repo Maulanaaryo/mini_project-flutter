@@ -106,6 +106,7 @@ void init() {
   locator.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());
   locator.registerLazySingleton<DatabaseHelperReview>(
       () => DatabaseHelperReview());
+      
   // external
   locator.registerLazySingleton(() => http.Client());
 }
