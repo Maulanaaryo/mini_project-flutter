@@ -6,9 +6,9 @@ import 'package:mini_project_alterra/common/failure.dart';
 import 'package:mini_project_alterra/data/datasources/movie_local_data_source.dart';
 import 'package:mini_project_alterra/data/datasources/movie_remote_data_source.dart';
 import 'package:mini_project_alterra/data/models/movie_table.dart';
-import 'package:mini_project_alterra/domain/entities/movie.dart';
-import 'package:mini_project_alterra/domain/entities/movie_detail.dart';
-import 'package:mini_project_alterra/domain/repositories/movie_repository.dart';
+import 'package:mini_project_alterra/data/entities/movie.dart';
+import 'package:mini_project_alterra/data/entities/movie_detail.dart';
+import 'package:mini_project_alterra/presentation/repositories/movie_repository.dart';
 
 class MovieRepositoryImpl implements MovieRepository {
   final MovieRemoteDataSource remoteDataSource;

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:mini_project_alterra/common/state_enum.dart';
-import 'package:mini_project_alterra/domain/entities/movie.dart';
-import 'package:mini_project_alterra/domain/usescases/get_popular.dart';
+import 'package:mini_project_alterra/data/entities/movie.dart';
+import 'package:mini_project_alterra/presentation/repositories/movie_repository.dart';
 
 class MoviePopularProvider extends ChangeNotifier {
   final GetPopularMovies getPopularMovies;

@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mini_project_alterra/auth/login_auth.dart';
-import 'package:mini_project_alterra/screen/about_screen.dart';
-import 'package:mini_project_alterra/screen/review_screen.dart';
-import 'package:mini_project_alterra/screen/watchlist_screen.dart';
+import 'package:mini_project_alterra/presentation/auth/login_auth.dart';
+import 'package:mini_project_alterra/presentation/screen/about_screen.dart';
+import 'package:mini_project_alterra/presentation/screen/review_screen.dart';
+import 'package:mini_project_alterra/presentation/screen/watchlist_screen.dart';
 import 'package:mini_project_alterra/widgets/custom_dialog.dart';
 
 class DrawerCard extends StatefulWidget {

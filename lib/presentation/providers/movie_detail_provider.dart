@@ -1,12 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:mini_project_alterra/common/state_enum.dart';
-import 'package:mini_project_alterra/domain/entities/movie.dart';
-import 'package:mini_project_alterra/domain/entities/movie_detail.dart';
-import 'package:mini_project_alterra/domain/usescases/get_detail.dart';
-import 'package:mini_project_alterra/domain/usescases/get_recommendations.dart';
-import 'package:mini_project_alterra/domain/usescases/get_watchlist_status.dart';
-import 'package:mini_project_alterra/domain/usescases/remove_watchlist.dart';
-import 'package:mini_project_alterra/domain/usescases/save_watchlist.dart';
+import 'package:mini_project_alterra/data/entities/movie.dart';
+import 'package:mini_project_alterra/data/entities/movie_detail.dart';
+import 'package:mini_project_alterra/presentation/repositories/movie_repository.dart';
 
 class MovieDetailProvider extends ChangeNotifier {
   static const watchlistAddSuccessMessage = 'Added to Watchlist';

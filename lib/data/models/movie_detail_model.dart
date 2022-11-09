@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:mini_project_alterra/data/models/genre_model.dart';
-import 'package:mini_project_alterra/domain/entities/movie_detail.dart';
+import 'package:mini_project_alterra/data/entities/movie_detail.dart';
 
 class MovieDetailResponse extends Equatable {
   const MovieDetailResponse({

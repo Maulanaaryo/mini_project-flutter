@@ -7,10 +7,10 @@ import 'dart:async' as _i6;
 import 'dart:ui' as _i7;
 
 import 'package:mini_project_alterra/common/state_enum.dart' as _i5;
-import 'package:mini_project_alterra/domain/entities/movie.dart' as _i4;
-import 'package:mini_project_alterra/domain/usescases/get_top_rated.dart'
+import 'package:mini_project_alterra/data/entities/movie.dart' as _i4;
+import 'package:mini_project_alterra/presentation/repositories/movie_repository.dart'
     as _i2;
-import 'package:mini_project_alterra/providers/movie_top_provider.dart' as _i3;
+import 'package:mini_project_alterra/presentation/providers/movie_top_provider.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint

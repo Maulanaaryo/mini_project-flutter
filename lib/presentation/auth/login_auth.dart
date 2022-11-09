@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mini_project_alterra/auth/register_auth.dart';
+import 'package:mini_project_alterra/presentation/auth/register_auth.dart';
 import 'package:mini_project_alterra/common/constants.dart';
-import 'package:mini_project_alterra/screen/home_screen.dart';
+import 'package:mini_project_alterra/presentation/screen/home_screen.dart';
 
 class LoginAuth extends StatefulWidget {
   static const routeName = '/loginAuth';

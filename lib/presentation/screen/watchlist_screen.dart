@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mini_project_alterra/common/state_enum.dart';
 import 'package:mini_project_alterra/common/utils.dart';
-import 'package:mini_project_alterra/providers/movie_watchlist_provider.dart';
-import 'package:mini_project_alterra/widgets/custom_list.dart';
+import 'package:mini_project_alterra/presentation/providers/movie_watchlist_provider.dart';
+import 'package:mini_project_alterra/widgets/custom_watchlist.dart';
 import 'package:provider/provider.dart';
 
 class WatchlistMovieScreen extends StatefulWidget {

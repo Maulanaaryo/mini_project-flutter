@@ -1,9 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:mini_project_alterra/common/state_enum.dart';
-import 'package:mini_project_alterra/domain/entities/movie.dart';
-import 'package:mini_project_alterra/domain/usescases/get_now_playing.dart';
-import 'package:mini_project_alterra/domain/usescases/get_popular.dart';
-import 'package:mini_project_alterra/domain/usescases/get_top_rated.dart';
+import 'package:mini_project_alterra/data/entities/movie.dart';
+import 'package:mini_project_alterra/presentation/repositories/movie_repository.dart';
 
 class MovieListProvider extends ChangeNotifier {
   final GetNowPlayingMovies getNowPlayingMovies;

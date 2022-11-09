@@ -3,7 +3,7 @@ import 'package:mini_project_alterra/data/datasources/movie_remote_data_source.d
 import 'package:mini_project_alterra/data/db/database_catatan.dart';
 import 'package:http/http.dart' as http;
 import 'package:mini_project_alterra/data/db/database_helper.dart';
-import 'package:mini_project_alterra/domain/repositories/movie_repository.dart';
+import 'package:mini_project_alterra/presentation/repositories/movie_repository.dart';
 import 'package:mockito/annotations.dart';
 
 @GenerateMocks([

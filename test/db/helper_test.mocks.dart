@@ -21,9 +21,9 @@ import 'package:mini_project_alterra/data/models/movie_detail_model.dart'
 import 'package:mini_project_alterra/data/models/movie_model.dart' as _i12;
 import 'package:mini_project_alterra/data/models/movie_review.dart' as _i4;
 import 'package:mini_project_alterra/data/models/movie_table.dart' as _i14;
-import 'package:mini_project_alterra/domain/entities/movie.dart' as _i9;
-import 'package:mini_project_alterra/domain/entities/movie_detail.dart' as _i10;
-import 'package:mini_project_alterra/domain/repositories/movie_repository.dart'
+import 'package:mini_project_alterra/data/entities/movie.dart' as _i9;
+import 'package:mini_project_alterra/data/entities/movie_detail.dart' as _i10;
+import 'package:mini_project_alterra/presentation/repositories/movie_repository.dart'
     as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:sqflite/sqflite.dart' as _i16;
@@ -308,22 +308,6 @@ class MockMovieRemoteDataSource extends _i1.Mock
           this,
           Invocation.method(
             #getDetailMovies,
-            [id],
-          ),
-        )),
-      ) as _i7.Future<_i3.MovieDetailResponse>);
-  @override
-  _i7.Future<_i3.MovieDetailResponse> getYoutubeId(int? id) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getYoutubeId,
-          [id],
-        ),
-        returnValue: _i7.Future<_i3.MovieDetailResponse>.value(
-            _FakeMovieDetailResponse_1(
-          this,
-          Invocation.method(
-            #getYoutubeId,
             [id],
           ),
         )),

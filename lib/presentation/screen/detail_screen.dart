@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:mini_project_alterra/common/constants.dart';
 import 'package:mini_project_alterra/common/state_enum.dart';
-import 'package:mini_project_alterra/domain/entities/genre.dart';
-import 'package:mini_project_alterra/domain/entities/movie.dart';
-import 'package:mini_project_alterra/domain/entities/movie_detail.dart';
-import 'package:mini_project_alterra/providers/movie_detail_provider.dart';
+import 'package:mini_project_alterra/data/entities/genre.dart';
+import 'package:mini_project_alterra/data/entities/movie.dart';
+import 'package:mini_project_alterra/data/entities/movie_detail.dart';
+import 'package:mini_project_alterra/presentation/providers/movie_detail_provider.dart';
 import 'package:provider/provider.dart';
 
 class DetailMovieScreen extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mini_project_alterra/auth/login_auth.dart';
+import 'package:mini_project_alterra/presentation/auth/login_auth.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

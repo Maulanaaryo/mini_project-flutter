@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mini_project_alterra/common/state_enum.dart';
-import 'package:mini_project_alterra/domain/entities/movie.dart';
-import 'package:mini_project_alterra/providers/movie_popular_provider.dart';
-import 'package:mini_project_alterra/screen/popular_screen.dart';
+import 'package:mini_project_alterra/data/entities/movie.dart';
+import 'package:mini_project_alterra/presentation/providers/movie_popular_provider.dart';
+import 'package:mini_project_alterra/presentation/screen/popular_screen.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';

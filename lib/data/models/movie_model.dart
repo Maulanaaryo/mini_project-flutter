@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:mini_project_alterra/domain/entities/movie.dart';
+import 'package:mini_project_alterra/data/entities/movie.dart';
 
 class MovieModel extends Equatable {
   const MovieModel({

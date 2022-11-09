@@ -38,11 +38,13 @@ class DatabaseHelperReview {
     ''');
   }
 
+  // Menambahkan ke daftar catatan
   Future<void> insertReview(ReviewModel reviewModel) async {
     final Database? db = await database;
     await db!.insert(_tblName, reviewModel.toMap());
   }
 
+ // Menampilkan seluruh data di catatan
   Future<List<ReviewModel>> getReview() async {
     final Database? db = await database;
     List<Map<String, dynamic>> results = await db!.query(_tblName);
@@ -50,6 +52,7 @@ class DatabaseHelperReview {
     return results.map((res) => ReviewModel.fromMap(res)).toList();
   }
 
+  // Menambahkan ke daftar catatan menggunakan ID
   Future<ReviewModel> getReviewById(int id) async {
     final Database? db = await database;
     List<Map<String, dynamic>> results = await db!.query(
@@ -61,6 +64,7 @@ class DatabaseHelperReview {
     return results.map((res) => ReviewModel.fromMap(res)).first;
   }
 
+  // Mengupdate catatan
   Future<void> updateReview(ReviewModel reviewModel) async {
     final db = await database;
 
@@ -72,6 +76,7 @@ class DatabaseHelperReview {
     );
   }
 
+  // Menghapus catatan
   Future<void> deleteReview(int id) async {
     final db = await database;
 

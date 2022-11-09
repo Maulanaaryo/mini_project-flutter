@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:mini_project_alterra/domain/entities/genre.dart';
+import 'package:mini_project_alterra/data/entities/genre.dart';
 
 class GenreModel extends Equatable {
   const GenreModel({

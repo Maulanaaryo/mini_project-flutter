@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mini_project_alterra/providers/movie_review.dart';
+import 'package:mini_project_alterra/presentation/providers/movie_review.dart';
 import 'package:mini_project_alterra/widgets/custom_review.dart';
 import 'package:provider/provider.dart';
 
