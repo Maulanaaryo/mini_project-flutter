@@ -6,7 +6,7 @@ import 'package:mini_project_alterra/widgets/custom_watchlist.dart';
 import 'package:provider/provider.dart';
 
 class WatchlistMovieScreen extends StatefulWidget {
-  static const routeName = '/watchlist-movie';
+  static const routeName = '/watchlist';
   const WatchlistMovieScreen({super.key});
 
   @override

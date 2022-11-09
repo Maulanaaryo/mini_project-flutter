@@ -5,7 +5,7 @@ import 'package:mini_project_alterra/widgets/custom_watchlist.dart';
 import 'package:provider/provider.dart';
 
 class TopRatedMovieScreen extends StatefulWidget {
-  static const routeName = '/top-rated-movie';
+  static const routeName = '/top-rated';
   const TopRatedMovieScreen({super.key});
 
   @override
