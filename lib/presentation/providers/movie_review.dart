@@ -9,13 +9,13 @@ class MovieReviewProvider extends ChangeNotifier {
 
   List<ReviewModel> get reviews => _reviewModel;
 
-  // mengimplementasi state management untuk mengakses data dari database
+  // mengakses data dari database
   MovieReviewProvider() {
     _dbHelperReview = DatabaseHelperReview();
     _getAllNotes();
   }
 
-  // mendapatkan data notes dari database ketika pertama kali objek DbProvider dibuat
+  // mendapatkan data notes dari database 
   void _getAllNotes() async {
     _reviewModel = await _dbHelperReview.getReview();
     notifyListeners();
@@ -32,12 +32,13 @@ class MovieReviewProvider extends ChangeNotifier {
     return await _dbHelperReview.getReviewById(id);
   }
 
-  // metode untuk memperbarui dan menghapus data
+  // mengedit data
   void updateNote(ReviewModel reviewModel) async {
     await _dbHelperReview.updateReview(reviewModel);
     _getAllNotes();
   }
 
+  // menghapus data
   void deleteNote(int id) async {
     await _dbHelperReview.deleteReview(id);
     _getAllNotes();
